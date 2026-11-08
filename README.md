@@ -1,6 +1,6 @@
 # workerd localhost connect() repro
 
-On Windows, `connect()` from `cloudflare:sockets` to `localhost` takes about 2 seconds since wrangler 4.135.0 (workerd 1.20260918.1, the Rust I/O backend), when the server listens on `127.0.0.1` only.
+On Windows, `connect()` from `cloudflare:sockets` to `localhost` takes about 2 seconds since workerd 1.20260918.1 (wrangler 4.135.0), which made the Rust I/O backend the default, when the server listens on `127.0.0.1` only.
 
 ```sh
 node server.mjs                      # listens on 127.0.0.1:39999
@@ -14,7 +14,7 @@ curl "http://127.0.0.1:8782/?host=localhost"
 
 Results on Windows 11, Node 26 (time until `socket.opened`):
 
-| Server on | Connect to | 4.134.0 | 4.135.0, 4.156.0 |
+| Server on | Connect to | workerd 1.20260917.1 (wrangler 4.134.0) | 1.20260918.1 (4.135.0), 1.20261023.1 (4.156.0) |
 | --- | --- | --- | --- |
 | `127.0.0.1` | `localhost` | 1-7ms | 2038-2061ms |
 | `::1` | `localhost` | 2049-2064ms | 3-7ms |
